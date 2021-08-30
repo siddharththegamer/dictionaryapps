@@ -16,12 +16,8 @@ export default class HomeScreen extends Component{
 
   getWord=(word)=>{
     var searchKeyword=word.toLowerCase()
-    var url;
-    //url = "https://rupinwhitehatjr.github.io/dictionary/searchKeyword.json"
-    //url = "https://rupinwhitehatjr.github.io/dictionary/"+ +".json"
-    url = "https://rupinwhitehatjr.github.io/dictionary/"+searchKeyword+".json"
-    //url = "https://rupinwhitehatjr.github.io/dictionary/"+word+".json"
-
+    var url = "https://rupinwhitehatjr.github.io/dictionary/"+searchKeyword+".json"
+    //console.log(url)
     return fetch(url)
     .then((data)=>{
       if(data.status===200)
@@ -34,15 +30,18 @@ export default class HomeScreen extends Component{
       }
     })
     .then((response)=>{
+        //console.log(response)
 
         var responseObject = response
+        //var word = responseObject.word
+        //var lexicalCategory = responseObject.results[0].lexicalEntries[0].lexicalCategory.text
         if(responseObject)
         {
           var wordData = responseObject.definitions[0]
-
+          //console.log(responseObject.definitions[0])
           var definition=wordData.description
           var lexicalCategory=wordData.wordtype
-
+          //console.log(lexicalCategory)
           this.setState({
             "word" : this.state.text, 
             "definition" :definition,
@@ -74,48 +73,7 @@ export default class HomeScreen extends Component{
           }}
         />
         <View style={styles.inputBoxContainer}>
-      
-        <Text 
-           onChangeText={text => {
-              this.setState({
-                text: text,
-                isSearchPressed: false,
-                word  : "Loading...",
-                lexicalCategory :'',
-                examples : [],
-                definition : ""
-              });
-           }}
-        />
-  
-     {   <input 
-           onChangeText={text => {
-              this.setState({
-                text: text,
-                isSearchPressed: false,
-                word  : "Loading...",
-                lexicalCategory :'',
-                examples : [],
-                definition : ""
-              });
-           }}
-        /> 
-        }
-      {
-      <TouchableOpacity 
-           onChangeText={text => {
-              this.setState({
-                text: text,
-                isSearchPressed: false,
-                word  : "Loading...",
-                lexicalCategory :'',
-                examples : [],
-                definition : ""
-              });
-           }}
-        /> 
-      }
-      {
+        
           <TextInput
             style={styles.inputBox}
             onChangeText={text => {
@@ -130,7 +88,7 @@ export default class HomeScreen extends Component{
             }}
             value={this.state.text}
           />
-  }
+
           <TouchableOpacity
             style={styles.searchButton}
             onPress={() => {
@@ -187,6 +145,9 @@ export default class HomeScreen extends Component{
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   inputBoxContainer: {
     flex:0.3,
     alignItems:'center',
